@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 // Update with your config settings.
 const migrationSource = {
   /**
@@ -11,23 +14,23 @@ const migrationSource = {
 };
 
 const config = {
-  client: 'pg',
+  client: "pg",
   connection: {
     connectionString: process.env.DATABASE_URL,
   },
-  searchPath: ['atlas'],
+  searchPath: ["atlas"],
   pool: {
     min: 2,
     max: 10,
   },
   migrations: {
-    schemaName: 'atlas',
-    extension: 'js',
-    directory: './database/migrations',
+    schemaName: "atlas",
+    extension: "js",
+    directory: "./database/migrations",
     migrationSource,
   },
   seeds: {
-    directory: './database/seeds',
+    directory: "./database/seeds",
   },
 };
 
