@@ -1,31 +1,38 @@
 import { Link } from 'react-router-dom';
-import { buttonClassName, buttonGroupClassName, panelClassName, panelCtaClassName } from '../ui';
+import {
+  buttonClassName,
+  buttonGroupClassName,
+  panelClassName,
+  panelCtaClassName,
+} from '../ui';
+import { getCurrentUser } from '../api';
 
-export const Component = () => {
-  const user = {
-    email: 'TODO'
-  }; // TODO fetch user if signed in
+const Home = () => {
+  const user = getCurrentUser();
+
   return (
-        <section className={panelClassName}>
-      <h1 className="text-3xl font-bold tracking-tight text-slate-900">Atlas</h1>
+    <section className={panelClassName}>
+      <h1 className='text-3xl font-bold tracking-tight text-slate-900'>
+        Atlas
+      </h1>
       {user ? (
         <div className={panelCtaClassName}>
-          <p className="text-slate-700">You are signed in as {user.email}.</p>
+          <p className='text-slate-700'>You are signed in as {user.email}.</p>
           <div className={buttonGroupClassName}>
-            <Link className={buttonClassName('primary')} to="/posts">
+            <Link className={buttonClassName('primary')} to='/posts'>
               View posts
             </Link>
-            <Link className={buttonClassName('secondary')} to="/posts/new">
+            <Link className={buttonClassName('secondary')} to='/posts/new'>
               Create a post
             </Link>
           </div>
         </div>
       ) : (
         <div className={buttonGroupClassName}>
-          <Link className={buttonClassName('primary')} to="/login">
+          <Link className={buttonClassName('primary')} to='/login'>
             Sign in
           </Link>
-          <Link className={buttonClassName('secondary')} to="/register">
+          <Link className={buttonClassName('secondary')} to='/register'>
             Create account
           </Link>
         </div>
@@ -34,4 +41,4 @@ export const Component = () => {
   );
 };
 
-Component.displayName = 'Home';
+export default Home;

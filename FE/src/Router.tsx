@@ -1,15 +1,22 @@
 import { createBrowserRouter } from 'react-router-dom';
-import App from './App';
+import { RouteErrorBoundary } from './components/RouteErrorBoundary';
+import App, { loader as appLoader } from './App';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Profile from './pages/Profile';
+import Register from './pages/Register';
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    loader: appLoader,
+    errorElement: <RouteErrorBoundary />,
     children: [
-      { index: true, lazy: () => import('./pages/Home') },
-      { path: '/login', lazy: () => import('./pages/Login') },
-      { path: '/profile', lazy: () => import('./pages/Profile')},
-      { path: '/register', lazy: () => import('./pages/Register')},
+      { index: true, element: <Home /> },
+      { path: 'login', element: <Login /> },
+      { path: 'profile', element: <Profile /> },
+      { path: 'register', element: <Register /> },
     ],
   },
 ]);
