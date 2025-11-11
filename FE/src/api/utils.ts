@@ -11,7 +11,7 @@ export type ApiEnvelope<T> = {
 };
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
-const TOKEN_STORAGE_KEY = import.meta.env.TOKEN_STORAGE_KEY;
+const TOKEN_STORAGE_KEY = import.meta.env.VITE_TOKEN_STORAGE_KEY;
 
 const api = axios.create({
   baseURL: API_BASE_URL,
