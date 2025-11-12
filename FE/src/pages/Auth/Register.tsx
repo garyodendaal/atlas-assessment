@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { register as registerUser } from '../api/index';
-import { useAuth } from '../context/AuthContext';
+import { register as registerUser } from '../../api/index';
+import { useAuth } from '../../context/AuthContext';
 import {
   buttonClassName,
   buttonGroupClassName,
@@ -13,7 +13,7 @@ import {
   labelClassName,
   panelClassName,
   errorTextClassName,
-} from '../ui';
+} from '../../ui';
 
 type RegisterFormData = {
   firstName: string;

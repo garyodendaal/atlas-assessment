@@ -1,4 +1,7 @@
-import { default as AuthenticationError, default as Error } from '@/errors/authenticationError';
+import {
+  default as AuthenticationError,
+  default as Error,
+} from '@/errors/authenticationError';
 import ClassValidationError from '@/errors/validationError';
 import { cleanErrors } from '@/utils/helpers/cleanErrors';
 import generateForgotPasswordEmail from '@/utils/mail-templates/forgotPassword';
@@ -23,7 +26,10 @@ const registerUser = async (options: RegisterParams): Promise<AuthResponse> => {
 
   const data = new Register(body);
   await validateOrReject(data).catch((errors) => {
-    throw new ClassValidationError('An issue Occurred during validation', cleanErrors(errors as ValidationError[]));
+    throw new ClassValidationError(
+      'An issue Occurred during validation',
+      cleanErrors(errors as ValidationError[])
+    );
   });
 
   const exist = await emailExists(data.email);
@@ -42,7 +48,12 @@ const registerUser = async (options: RegisterParams): Promise<AuthResponse> => {
     is_archived: false,
   });
 
-  const emailTemplate = generateWelcomeEmail({ firstName: data.firstName, lastName: data.lastName, email: data.email, url: `${process.env.FRONTEND_URL}/login` });
+  const emailTemplate = generateWelcomeEmail({
+    firstName: data.firstName,
+    lastName: data.lastName,
+    email: data.email,
+    url: `${process.env.FRONTEND_URL}/login`,
+  });
 
   await sendEmail(data.email, emailTemplate, 'Welcome to the Atlas Portal');
 

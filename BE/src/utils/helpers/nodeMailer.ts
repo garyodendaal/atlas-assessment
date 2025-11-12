@@ -2,6 +2,7 @@ import nodemailer from 'nodemailer';
 import type Mail from 'nodemailer/lib/mailer';
 import type SMTPTransport from 'nodemailer/lib/smtp-transport';
 import env from '../env';
+import AuthenticationError from '@/errors/authenticationError';
 
 // TODO: CHANGE ETHEREAL EMAIL CREDENTIALS
 
@@ -12,8 +13,8 @@ const transporter = nodemailer.createTransport({
   host: 'smtp.ethereal.email',
   port: 587,
   auth: {
-    user: 'bella.fisher@ethereal.email',
-    pass: 'v2WedkcqFqJF4e2Cxn'
+    user: email,
+    pass: password,
   },
 });
 
@@ -31,7 +32,7 @@ const sendEmail = async (
   toEmail: string | string[],
   emailHtml: string,
   subject: string,
-  attachments: Mail.Attachment[] = [],
+  attachments: Mail.Attachment[] = []
 ): Promise<SMTPTransport.SentMessageInfo> => {
   return await transporter.sendMail({
     from: SANDBOX_EMAIL,

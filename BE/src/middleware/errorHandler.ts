@@ -13,10 +13,17 @@ import { AtlasError } from '@/types/error';
  * @param {NextFunction} next What to do next
  */
 export default (
-  err: AtlasError | ClassValidationError | AuthenticationError | SqlError | Error | null | undefined,
+  err:
+    | AtlasError
+    | ClassValidationError
+    | AuthenticationError
+    | SqlError
+    | Error
+    | null
+    | undefined,
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ): void => {
   console.log(err);
   if (!err) {
@@ -30,17 +37,23 @@ export default (
   }
 
   if (err instanceof SqlError) {
-    res.status(err.status || 500).json({ message: err.message, sqlError: err.sqlError, stack: err.stack });
+    res
+      .status(err.status || 500)
+      .json({ message: err.message, sqlError: err.sqlError, stack: err.stack });
     return;
   }
 
   if (err instanceof AuthenticationError) {
-    res.status(err.status || 403).json({ message: err.message, stack: err.stack });
+    res
+      .status(err.status || 403)
+      .json({ message: err.message, stack: err.stack });
     return;
   }
 
   if (err instanceof AtlasError) {
-    res.status(err.status ?? 500).json({ message: err.message, stack: err.stack });
+    res
+      .status(err.status ?? 500)
+      .json({ message: err.message, stack: err.stack });
     return;
   }
 

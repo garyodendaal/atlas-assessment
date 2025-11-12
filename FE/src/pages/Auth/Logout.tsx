@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { logout } from '../api/index';
-import { useAuth } from '../context/AuthContext';
-import { panelClassName } from '../ui';
+import { logout } from '../../api/index';
+import { useAuth } from '../../context/AuthContext';
+import { panelClassName } from '../../ui';
 
 const Logout = () => {
   const { setUser } = useAuth();

@@ -6,9 +6,17 @@ import {
   panelCtaClassName,
 } from '../ui';
 import { getCurrentUser } from '../api';
+import { useEffect, useState } from 'react';
+import { type User } from '../types';
 
 const Home = () => {
-  const user = getCurrentUser();
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    getCurrentUser().then((user) => {
+      setUser(user);
+    });
+  });
 
   return (
     <section className={panelClassName}>

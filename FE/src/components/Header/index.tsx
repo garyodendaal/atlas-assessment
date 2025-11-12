@@ -1,11 +1,11 @@
 import { Link, NavLink } from 'react-router-dom';
+import type { User } from '../../types';
 
-const Header = () => {
-  const user = {
-    name: 'Gary',
-    email: 'Gary@garyo.co.za',
-  };
+type HeaderProps = {
+  user: User | null;
+};
 
+const Header = ({ user }: HeaderProps) => {
   const navLinkClassName = ({ isActive }: { isActive: boolean }) =>
     `rounded-full px-3 py-1.5 text-sm font-semibold transition ${
       isActive
@@ -36,6 +36,9 @@ const Header = () => {
             </>
           ) : (
             <>
+              <NavLink to='/posts' className={navLinkClassName}>
+                Posts
+              </NavLink>
               <NavLink to='/login' className={navLinkClassName}>
                 Login
               </NavLink>
@@ -50,4 +53,4 @@ const Header = () => {
   );
 };
 
-export default Header
+export default Header;
