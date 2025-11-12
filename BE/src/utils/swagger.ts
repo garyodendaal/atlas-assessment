@@ -282,6 +282,10 @@ const options = {
               type: 'boolean',
               description: 'Whether user is archived',
             },
+            is_verified: {
+              type: 'boolean',
+              description: 'Whether user is verified',
+            },
             created_at: {
               type: 'string',
               format: 'date-time',
@@ -334,6 +338,30 @@ const options = {
             },
           },
         },
+        VerificationRequest: {
+          type: 'object',
+          required: ['token'],
+          properties: {
+            token: {
+              type: 'string',
+              description: 'Verification token from email',
+            },
+          },
+        },
+        VerificationResponse: {
+          type: 'object',
+          properties: {
+            data: {
+              type: 'object',
+              properties: {
+                success: {
+                  type: 'boolean',
+                  description: 'Verification status',
+                },
+              },
+            },
+          },
+        },
       },
     },
     security: [
@@ -348,11 +376,15 @@ const options = {
 const specs = swaggerJsdoc(options);
 
 export const setupSwagger = (app: Express) => {
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {
-    explorer: true,
-    customCss: '.swagger-ui .topbar { display: none }',
-    customSiteTitle: 'Atlas Assessment API Documentation',
-  }));
+  app.use(
+    '/api-docs',
+    swaggerUi.serve,
+    swaggerUi.setup(specs, {
+      explorer: true,
+      customCss: '.swagger-ui .topbar { display: none }',
+      customSiteTitle: 'Atlas Assessment API Documentation',
+    })
+  );
 };
 
 export default specs;

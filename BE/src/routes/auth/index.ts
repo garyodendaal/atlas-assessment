@@ -10,7 +10,9 @@ import {
   type Login,
   type LoginParams,
   type ResetPassword,
-  type ResetPasswordParams
+  type ResetPasswordParams,
+  Verify,
+  VerifyParams,
 } from '@models/auth';
 import { type RequestModel } from '@ts-types/request';
 import express from 'express';
@@ -18,8 +20,9 @@ import forgotPassword from './forgotPassword';
 import login from './login';
 import requestPasswordReset from './requestPasswordReset';
 import registerUser from './register';
+import verifyUser from './verify';
 
-const authRouter = express.Router({ mergeParams: true});
+const authRouter = express.Router({ mergeParams: true });
 
 /**
  * @swagger
@@ -59,7 +62,7 @@ authRouter.post(
     return {
       body: req.body as Login,
     };
-  }),
+  })
 );
 
 /**
@@ -123,11 +126,14 @@ authRouter.get('/valid', Authentication(), (req: RequestModel, res) => {
  */
 authRouter.post(
   '/forgot-password',
-  controller(requestPasswordReset, (req: RequestModel): ForgotPasswordParams => {
-    return {
-      body: req.body as ForgotPassword,
-    };
-  }),
+  controller(
+    requestPasswordReset,
+    (req: RequestModel): ForgotPasswordParams => {
+      return {
+        body: req.body as ForgotPassword,
+      };
+    }
+  )
 );
 
 /**
@@ -162,7 +168,7 @@ authRouter.post(
     return {
       body: req.body as Register,
     };
-  }),
+  })
 );
 
 /**
@@ -211,7 +217,56 @@ authRouter.patch(
       body: req.body as ResetPassword,
       id: req.params.id,
     };
-  }),
+  })
+);
+
+/**
+ * @swagger
+ * /auth/{id}/verify:
+ *   post:
+ *     summary: Verify a user account
+ *     tags: [Authentication]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/VerificationRequest'
+ *     responses:
+ *       200:
+ *         description: Account verified successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/VerificationResponse'
+ *       400:
+ *         description: Invalid or expired verification token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+authRouter.post(
+  '/:id/verify',
+  controller(verifyUser, (req: RequestModel): VerifyParams => {
+    return {
+      id: req.params.id,
+      body: req.body as Verify,
+    };
+  })
 );
 
 // Register error handler after all routes

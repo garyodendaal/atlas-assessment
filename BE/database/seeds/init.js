@@ -14,7 +14,9 @@ export async function seed(knex) {
       {
         email: 'admin@atlas.co.za',
         password: hashedPassword,
-        verified: true,
+        is_verified: true,
+        verification_token: null,
+        verification_token_expires_at: null,
       },
     ])
     .returning('id');

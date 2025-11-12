@@ -2,7 +2,13 @@ import { type ControllerParams } from '@ts-types/general-types';
 import { type ResponseModel } from '@ts-types/response-model';
 import { IsBoolean, IsEmail, IsOptional, Length } from 'class-validator';
 
-export interface VerifyParams extends ControllerParams {}
+export interface VerifyParams extends ControllerParams {
+  body: Verify;
+}
+
+export interface VerificationResponse extends ResponseModel {
+  data: AuthData;
+}
 export interface LoginParams extends ControllerParams {
   body: Login;
 }
@@ -128,5 +134,20 @@ export class ForgotPassword {
    */
   constructor(data: ForgotPassword) {
     this.email = data.email;
+  }
+}
+
+/**
+ *
+ */
+export class Verify {
+  @Length(1, 255)
+  token: string;
+
+  /**
+   * The constructor
+   */
+  constructor(data: Verify) {
+    this.token = data.token;
   }
 }

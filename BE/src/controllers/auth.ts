@@ -10,11 +10,7 @@ const Knex = db();
  */
 export const loginUser = async (email: string): Promise<User | undefined> => {
   const user = (await Knex('users')
-    .select(
-      'id',
-      'email',
-      'password',
-    )
+    .select('id', 'email', 'password', 'is_verified')
     .where('email', 'ILIKE', email)
     .first()) as User;
   return user;

@@ -7,11 +7,13 @@ export async function up(knex) {
     .createTable('users', function (table) {
       table.increments('id').primary();
       table.string('email').notNullable().unique();
-      table.boolean('is_archived').notNullable().defaultTo(false);
       table.string('first_name').nullable();
       table.string('last_name').nullable();
       table.string('password').notNullable();
-      table.boolean('verified').notNullable().defaultTo(false);
+      table.string('verification_token').nullable();
+      table.boolean('is_archived').notNullable().defaultTo(false);
+      table.boolean('is_verified').notNullable().defaultTo(false);
+      table.timestamp('verification_token_expires_at').nullable();
       table.timestamps(true, true);
     })
     .createTable('posts', function (table) {

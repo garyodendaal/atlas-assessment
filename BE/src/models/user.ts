@@ -1,6 +1,14 @@
 import type { ResponseModel } from '@/types/response-model';
 import notNull from '@/utils/helpers/notNull';
-import { IsBoolean, IsDate, IsEmail, IsEnum, IsOptional, IsUUID, Length } from 'class-validator';
+import {
+  IsBoolean,
+  IsDate,
+  IsEmail,
+  IsEnum,
+  IsOptional,
+  IsUUID,
+  Length,
+} from 'class-validator';
 import dayjs from 'dayjs';
 import Title from './enums/title';
 
@@ -90,6 +98,25 @@ export class User {
   @IsBoolean()
   is_archived: boolean = false;
 
+  /**
+   * TINYINT NN locked
+   */
+  @IsOptional()
+  @IsBoolean()
+  is_verified: boolean = false;
+
+  /**
+   * Text NN verification_token
+   */
+  @IsOptional()
+  @Length(1, 255)
+  verification_token?: string | null;
+
+  // Date token expires
+  @IsOptional()
+  @IsDate()
+  verification_token_expires_at?: Date | null;
+
   // Date created
   @IsOptional()
   @IsDate()
@@ -121,6 +148,17 @@ export class User {
     }
     if (notNull(data.is_archived)) {
       this.is_archived = data.is_archived;
+    }
+    if (notNull(data.is_verified)) {
+      this.is_verified = data.is_verified;
+    }
+    if (notNull(data.verification_token)) {
+      this.verification_token = data.verification_token;
+    }
+    if (notNull(data.verification_token_expires_at)) {
+      this.verification_token_expires_at = dayjs(
+        data.verification_token_expires_at
+      ).toDate();
     }
     if (notNull(data.organization_id)) {
       this.organization_id = data.organization_id;

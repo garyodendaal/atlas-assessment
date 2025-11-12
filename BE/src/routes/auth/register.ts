@@ -11,6 +11,8 @@ import { Register, RegisterParams, type AuthResponse } from '@models/auth';
 import { sendEmail } from '@utils/mail';
 import bcrypt from 'bcryptjs';
 import { validateOrReject, type ValidationError } from 'class-validator';
+import crypto from 'crypto';
+import dayjs from 'dayjs';
 
 /**
  * Login user
@@ -38,6 +40,9 @@ const registerUser = async (options: RegisterParams): Promise<AuthResponse> => {
     throw new AuthenticationError('Email already exists', 400);
   }
 
+  const verificationToken = crypto.randomBytes(32).toString('hex');
+  const verificationExpiresAt = dayjs().add(24, 'hour').toDate();
+
   const hashedPassword = await bcrypt.hash(data.password, 10);
 
   const user = await createUser({
@@ -46,16 +51,25 @@ const registerUser = async (options: RegisterParams): Promise<AuthResponse> => {
     first_name: data.firstName,
     last_name: data.lastName,
     is_archived: false,
+    is_verified: false,
+    verification_token: verificationToken,
+    verification_token_expires_at: verificationExpiresAt,
   });
+
+  const verificationUrl = `${process.env.FRONTEND_URL}/verify?token=${verificationToken}&userId=${user.id}`;
 
   const emailTemplate = generateWelcomeEmail({
     firstName: data.firstName,
     lastName: data.lastName,
     email: data.email,
-    url: `${process.env.FRONTEND_URL}/login`,
+    url: verificationUrl,
   });
 
-  await sendEmail(data.email, emailTemplate, 'Welcome to the Atlas Portal');
+  await sendEmail(
+    data.email,
+    emailTemplate,
+    'Welcome to the Atlas Portal. Please verify your account'
+  );
 
   return {
     data: {
