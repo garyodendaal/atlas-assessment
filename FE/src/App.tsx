@@ -16,7 +16,7 @@ function App() {
   return (
     <div>
       <AuthProvider initialUser={user}>
-        <Header user={user} />
+        <Header />
         <main>
           <Outlet />
         </main>

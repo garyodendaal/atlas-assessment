@@ -17,18 +17,28 @@ const Header = () => {
           <Link to='/' className='transition hover:text-white/80'>
             Atlas
           </Link>
-        </div>
-        <nav className='flex flex-1 flex-wrap items-center justify-end gap-3 text-sm'>
           <NavLink to='/' end className={navLinkClassName}>
             Home
           </NavLink>
+          <NavLink to='/posts' end className={navLinkClassName}>
+            Posts
+          </NavLink>
+        </div>
+        <nav className='flex flex-1 flex-wrap items-center justify-end gap-3 text-sm'>
           {user ? (
             <>
+              <span className='rounded-full bg-white/10 px-3 py-1.5 text-sm font-semibold text-white/90'>
+                Logged in as {user.fullName}
+              </span>
               <NavLink to='/profile' className={navLinkClassName}>
                 Profile
               </NavLink>
               <NavLink to='/logout' className={navLinkClassName}>
                 Logout
+              </NavLink>
+              {/* The signed in user should have a link to the login page - Is this correct and what should the behaviour be */}
+              <NavLink to='/login' className={navLinkClassName}>
+                Login
               </NavLink>
             </>
           ) : (

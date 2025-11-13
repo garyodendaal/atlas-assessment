@@ -5,18 +5,10 @@ import {
   panelClassName,
   panelCtaClassName,
 } from '../ui';
-import { getCurrentUser } from '../api';
-import { useEffect, useState } from 'react';
-import { type User } from '../types';
+import { useAuth } from '../context/AuthContext';
 
 const Home = () => {
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    getCurrentUser().then((user) => {
-      setUser(user);
-    });
-  });
+  const { user } = useAuth();
 
   return (
     <section className={panelClassName}>
