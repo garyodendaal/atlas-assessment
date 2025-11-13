@@ -1,9 +1,8 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLoaderData } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import { AuthProvider } from './context/AuthContext';
 import { getCurrentUser } from './api';
-import { useEffect, useState } from 'react';
 import { type User } from './types';
 
 export async function loader() {
@@ -12,13 +11,7 @@ export async function loader() {
 }
 
 function App() {
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    getCurrentUser().then((user) => {
-      setUser(user);
-    });
-  }, [getCurrentUser]);
+  const { user } = useLoaderData() as { user: User | null };
 
   return (
     <div>

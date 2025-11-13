@@ -1,11 +1,8 @@
 import { Link, NavLink } from 'react-router-dom';
-import type { User } from '../../types';
+import { useAuth } from '../../context/AuthContext';
 
-type HeaderProps = {
-  user: User | null;
-};
-
-const Header = ({ user }: HeaderProps) => {
+const Header = () => {
+  const { user } = useAuth();
   const navLinkClassName = ({ isActive }: { isActive: boolean }) =>
     `rounded-full px-3 py-1.5 text-sm font-semibold transition ${
       isActive
