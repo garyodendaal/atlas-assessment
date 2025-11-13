@@ -4,25 +4,26 @@ import Header from './components/Header';
 import { AuthProvider } from './context/AuthContext';
 import { getCurrentUser } from './api';
 import { type User } from './types';
+import { appShellClassName, mainClassName } from './ui';
 
 export async function loader() {
   const user = await getCurrentUser();
   return { user };
 }
 
-function App() {
+const App = () => {
   const { user } = useLoaderData() as { user: User | null };
 
   return (
-    <div>
+    <div className={appShellClassName}>
       <AuthProvider initialUser={user}>
         <Header />
-        <main>
+        <main className={mainClassName}>
           <Outlet />
         </main>
       </AuthProvider>
     </div>
   );
-}
+};
 
 export default App;
