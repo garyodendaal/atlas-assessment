@@ -24,14 +24,11 @@ function mapUser(data: BackendUser | null | undefined): User | null {
     return null;
   }
 
-  const nameParts = [data.first_name, data.last_name].filter((part) =>
-    Boolean(part && part.trim())
-  );
   return {
     id: String(data.id),
     email: data.email,
-    name: nameParts.length > 0 ? nameParts.join(' ') : undefined,
-    verified: data.is_archived === undefined ? true : !data.is_archived,
+    fullName: `${data.first_name} ${data.last_name}`,
+    isVerified: Boolean(data.is_verified),
   };
 }
 

@@ -26,6 +26,9 @@ importers:
       react-router-dom:
         specifier: 6.29.0
         version: 6.29.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      react-simple-wysiwyg:
+        specifier: ^3.4.1
+        version: 3.4.1(react@19.1.1)
       tailwindcss:
         specifier: 4.1.16
         version: 4.1.16
@@ -1280,6 +1283,11 @@ packages:
   react-router@6.29.0:
     resolution: {integrity: sha512-DXZJoE0q+KyeVw75Ck6GkPxFak63C4fGqZGNijnWgzB/HzSP1ZfTlBj5COaGWwhrMQ/R8bXiq5Ooy4KG+ReyjQ==}
     engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: '>=16.8'
+
+  react-simple-wysiwyg@3.4.1:
+    resolution: {integrity: sha512-amppNS/WiUSURSFXg9evcRjRBwK6pf5LRWDACVZT/q4k2TginjNxegxM0T2s2LYulbRFS4eGwO7nv57OskckHw==}
     peerDependencies:
       react: '>=16.8'
 
@@ -2551,6 +2559,10 @@ snapshots:
   react-router@6.29.0(react@19.1.1):
     dependencies:
       '@remix-run/router': 1.22.0
+      react: 19.1.1
+
+  react-simple-wysiwyg@3.4.1(react@19.1.1):
+    dependencies:
       react: 19.1.1
 
   react@19.1.1: {}

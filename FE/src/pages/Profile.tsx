@@ -1,4 +1,4 @@
-import { getCurrentUser } from '../api';
+import { useAuth } from '../context/AuthContext';
 import {
   panelClassName,
   profileListClassName,
@@ -6,7 +6,7 @@ import {
 } from '../ui';
 
 const Profile = () => {
-  const user = getCurrentUser();
+  const { user } = useAuth();
 
   return (
     <section className={panelClassName}>
@@ -18,14 +18,14 @@ const Profile = () => {
           <dt className='text-sm font-semibold uppercase tracking-wide text-slate-600'>
             Email
           </dt>
-          <dd className='m-0 text-lg text-slate-800'>{user.email}</dd>
+          <dd className='m-0 text-lg text-slate-800'>{user?.email}</dd>
         </div>
         <div className={profileRowClassName}>
           <dt className='text-sm font-semibold uppercase tracking-wide text-slate-600'>
             Verified
           </dt>
           <dd className='m-0 text-lg text-slate-800'>
-            {user.verified ? 'Yes' : 'Pending verification'}
+            {user?.isVerified ? 'Yes' : 'Pending verification'}
           </dd>
         </div>
       </dl>

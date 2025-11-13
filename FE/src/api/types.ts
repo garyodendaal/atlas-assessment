@@ -1,9 +1,10 @@
 export type BackendUser = {
-  id?: number | string;
-  email?: string;
+  id: number | string;
+  email: string;
   first_name?: string;
   last_name?: string;
   is_archived?: boolean;
+  is_verified: boolean;
 };
 
 export type RegisterPayload = {
