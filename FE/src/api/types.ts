@@ -23,3 +23,7 @@ export const AuthError = (message: string): Error => {
   error.name = 'AuthError';
   return error;
 };
+
+export type VerifyPayload = {
+  token: string;
+};

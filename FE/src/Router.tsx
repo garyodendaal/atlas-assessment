@@ -8,6 +8,7 @@ import Register from './pages/Auth/Register';
 import Logout from './pages/Auth/Logout';
 import Posts from './pages/Posts/Posts';
 import PostDetail from './pages/Posts/PostDetail';
+import Verify from './pages/Auth/Verify';
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ export const router = createBrowserRouter([
       { path: 'logout', element: <Logout /> },
       { path: 'profile', element: <Profile /> },
       { path: 'register', element: <Register /> },
+      { path: 'verify', element: <Verify /> },
       { path: 'posts', element: <Posts /> },
       { path: 'posts/:id', element: <PostDetail /> },
     ],

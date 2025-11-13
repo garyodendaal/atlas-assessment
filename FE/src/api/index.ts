@@ -1,1 +1,8 @@
-export { getCurrentUser, requireUser, login, register, logout } from './auth';
+export {
+  getCurrentUser,
+  login,
+  logout,
+  register,
+  requireUser,
+  verifyAccount,
+} from './auth';

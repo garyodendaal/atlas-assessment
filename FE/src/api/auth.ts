@@ -1,5 +1,10 @@
 import { type User } from '../types';
-import type { BackendUser, LoginPayload, RegisterPayload } from './types';
+import type {
+  BackendUser,
+  LoginPayload,
+  RegisterPayload,
+  VerifyPayload,
+} from './types';
 import {
   clearAuthToken,
   onAuthFailure,
@@ -103,6 +108,25 @@ export async function register(payload: RegisterPayload): Promise<User> {
   });
 
   return login({ email: payload.email, password: payload.password });
+}
+
+export async function verifyAccount(
+  userId: string | number,
+  payload: VerifyPayload
+): Promise<void> {
+  if (!userId) {
+    throw new Error('A user id is required to verify the account.');
+  }
+
+  const response = await request<{ success?: boolean }>({
+    url: `/auth/${userId}/verify`,
+    method: 'POST',
+    data: payload,
+  });
+
+  if (!response.data?.success) {
+    throw new Error('Unable to verify your email address.');
+  }
 }
 
 export async function logout(): Promise<void> {
