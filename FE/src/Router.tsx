@@ -6,9 +6,10 @@ import Login from './pages/Auth/Login';
 import Profile from './pages/Profile';
 import Register from './pages/Auth/Register';
 import Logout from './pages/Auth/Logout';
-import Posts from './pages/Posts/Posts';
+import Posts, { loader as postsLoader } from './pages/Posts/Posts';
 import PostDetail from './pages/Posts/PostDetail';
 import Verify from './pages/Auth/Verify';
+import CreatePost from './pages/Posts/CreatePost';
 
 export const router = createBrowserRouter([
   {
@@ -23,7 +24,8 @@ export const router = createBrowserRouter([
       { path: 'profile', element: <Profile /> },
       { path: 'register', element: <Register /> },
       { path: 'verify', element: <Verify /> },
-      { path: 'posts', element: <Posts /> },
+      { path: 'posts', element: <Posts />, loader: postsLoader },
+      { path: 'posts/create', element: <CreatePost /> },
       { path: 'posts/:id', element: <PostDetail /> },
     ],
   },

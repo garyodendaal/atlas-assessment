@@ -1,4 +1,10 @@
-import { useState, useEffect, useMemo } from 'react';
+import {
+  useState,
+  useEffect,
+  useMemo,
+  type ComponentPropsWithoutRef,
+} from 'react';
+import type { ClassicEditor as ClassicEditorType } from 'ckeditor5';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import {
   ClassicEditor,
@@ -42,7 +48,12 @@ import 'ckeditor5/ckeditor5.css';
 
 const LICENSE_KEY = import.meta.env.VITE_CKE_LICENSE;
 
-const Editor = () => {
+type EditorProps = {
+  value?: string;
+  onChange?: (value: string) => void;
+} & Omit<ComponentPropsWithoutRef<'div'>, 'onChange'>;
+
+const Editor = ({ value = '', onChange, className, ...rest }: EditorProps) => {
   const [isLayoutReady, setIsLayoutReady] = useState(false);
 
   useEffect(() => {
@@ -58,6 +69,7 @@ const Editor = () => {
 
     return {
       editorConfig: {
+        licenseKey: LICENSE_KEY,
         toolbar: {
           items: [
             'undo',
@@ -157,14 +169,20 @@ const Editor = () => {
           contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'],
         },
       },
-      LICENSE_KEY: LICENSE_KEY,
     };
   }, [isLayoutReady]);
 
   return (
-    <div>
+    <div className={className} {...rest}>
       {editorConfig && (
-        <CKEditor editor={ClassicEditor} config={editorConfig} />
+        <CKEditor
+          editor={ClassicEditor}
+          config={editorConfig}
+          data={value}
+          onChange={(_, editor: ClassicEditorType) => {
+            onChange?.(editor.getData());
+          }}
+        />
       )}
     </div>
   );

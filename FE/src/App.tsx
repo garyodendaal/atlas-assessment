@@ -6,10 +6,10 @@ import { getCurrentUser } from './api';
 import { type User } from './types';
 import { appShellClassName, mainClassName } from './ui';
 
-export async function loader() {
+export const loader = async () => {
   const user = await getCurrentUser();
   return { user };
-}
+};
 
 const App = () => {
   const { user } = useLoaderData() as { user: User | null };
